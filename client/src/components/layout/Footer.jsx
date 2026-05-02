@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <div className="font-display font-bold text-[17px] text-ink flex items-center gap-1">
-            Bontha Chakri<span style={{ color: '#6EE7B7' }}>.</span>
+            Bontha Chakriiii<span style={{ color: '#6EE7B7' }}>.</span>
           </div>
           <p className="font-body text-ink-3 text-xs mt-1">Full Stack Engineer · Hyderabad, India</p>
         </div>
