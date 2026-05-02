@@ -1,0 +1,64 @@
+name: Frontend CI/CD to S3 + CloudFront   # Workflow name (visible in GitHub Actions)
+
+on:
+  push:
+    branches:
+      - main   # Trigger this workflow whenever code is pushed to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest   # GitHub will run this on a Linux machine
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # 👉 Downloads your GitHub repo code into the runner
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+        # 👉 Installs Node.js (version 18)
+        # 👉 Enables npm cache → faster installs in future runs
+
+      - name: Install dependencies
+        run: npm ci
+        # 👉 Installs packages from package-lock.json
+        # 👉 Faster and more reliable than npm install in CI
+
+      - name: Build project
+        run: npm run build
+        # 👉 Runs Vite build
+        # 👉 Creates 'dist/' folder (production-ready files)
+
+      - name: Check dist folder
+        run: ls -la dist
+        # 👉 Debug step: shows files inside dist/
+        # 👉 Helps confirm build worked correctly
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+        # 👉 Connects GitHub to AWS using IAM user credentials
+        # 👉 These values come from GitHub Secrets (secure)
+
+      - name: Upload dist to S3
+        run: |
+          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} \
+          --delete \
+          --cache-control "max-age=31536000,public"
+        # 👉 Uploads all files from dist/ → S3 bucket
+        # 👉 --delete → removes old files from bucket (keeps it clean)
+        # 👉 cache-control → tells browser to cache static files (performance boost)
+
+      - name: Invalidate CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+        # 👉 Clears CloudFront cache
+        # 👉 Ensures users see latest version (not old cached files)
