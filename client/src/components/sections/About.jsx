@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { MapPin, Mail, Phone, Zap, Code2, Trophy } from 'lucide-react'
 
 const stats = [
-  { icon: Trophy, v: 'Rank 320', sub: 'TCS CodeVita · 537K+ participants', color: '#F59E0B' },
+  { icon: Trophy, v: 'Rank 320', sub: 'TCS CodeVita · 536K+ participants', color: '#F59E0B' },
   { icon: Code2,  v: '1000+',   sub: 'DSA problems — LeetCode & Codeforces', color: '#6EE7B7' },
   { icon: Zap,    v: '28% ↑',   sub: 'API performance at Accenture', color: '#818CF8' },
 ]
