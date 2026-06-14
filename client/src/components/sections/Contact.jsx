@@ -148,7 +148,7 @@ export default function Contact() {
               <span className="w-2.5 h-2.5 rounded-full bg-accent animate-pulse shrink-0" />
               <div>
                 <div className="font-display font-semibold text-sm text-ink">Available for opportunities</div>
-                <div className="font-mono text-[11px] text-ink-3 mt-0.5">Full-time · Remote · Hybrid</div>
+                <div className="font-mono text-[11px] text-ink-3 mt-0.5">Full-time · chakri · Hybrid</div>
               </div>
             </div>
           </motion.div>
