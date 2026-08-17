@@ -4,9 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: { DEFAULT: '#05070F', 2: '#080C18', 3: '#0C1220' },
-        accent: { DEFAULT: '#6EE7B7', 2: '#34D399' },
-        ink: { DEFAULT: '#EEF2FF', 2: '#94A3B8', 3: '#475569' },
+        bg: { DEFAULT: 'rgb(var(--bg-rgb) / <alpha-value>)', 2: 'var(--bg-2)' },
+        accent: {
+          DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
+          2: 'rgb(var(--accent-2-rgb) / <alpha-value>)',
+          contrast: 'var(--accent-contrast)',
+        },
+        ink: { DEFAULT: 'rgb(var(--text-rgb) / <alpha-value>)', 2: 'var(--text-2)', 3: 'var(--text-3)' },
+      },
+      borderRadius: {
+        '2xl': '1.25rem',
+        '3xl': '1.75rem',
+        '4xl': '2rem',
       },
       fontFamily: {
         display: ['"Plus Jakarta Sans"', 'sans-serif'],

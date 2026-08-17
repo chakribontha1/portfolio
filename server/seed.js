@@ -8,32 +8,32 @@ const Experience = require('./models/Experience');
 
 const projects = [
   {
-    title: 'EduMagnetX — E-Learning Platform',
-    description: 'Full-stack e-learning platform with role-based admin dashboards, automated workflows, and optimized REST APIs. Achieved 40% manual effort reduction and 30% maintenance overhead reduction.',
-    techStack: ['React.js', 'Node.js', 'Express.js', 'PostgreSQL', 'JWT', 'REST API'],
+    title: 'EduMagnetX — Event-Driven E-Learning Platform',
+    description: 'Multi-tenant e-learning platform designed and shipped solo — secure role-based auth, course management, and REST APIs for 200+ concurrent users. Notifications run on Apache Kafka so every learner gets enrollment and course-update alerts during traffic spikes, with zero message loss.',
+    techStack: ['Java', 'Spring Boot', 'Spring Security', 'Apache Kafka', 'PostgreSQL', 'AWS', 'Docker'],
     githubLink: 'https://github.com/chakribontha',
     liveDemo: '',
-    tags: ['Full Stack', 'Backend', 'Education'],
+    tags: ['Backend', 'Distributed Systems'],
     featured: true,
     order: 1
   },
   {
-    title: 'Share Sketch — Real-Time Whiteboard',
-    description: 'Real-time collaborative whiteboard with WebSockets achieving <50ms update speeds. Features secure JWT authentication, access control, and cloud-based API integrations.',
-    techStack: ['React.js', 'Node.js', 'Express.js', 'WebSockets', 'JWT', 'Tailwind CSS'],
+    title: 'Real-Time Collaboration Engine',
+    description: 'Sync engine built on WebSockets holding sub-50ms broadcast latency across concurrent sessions, with JWT-secured access control and a stateless API layer designed to scale horizontally.',
+    techStack: ['Node.js', 'Express.js', 'WebSockets', 'JWT'],
     githubLink: 'https://github.com/chakribontha',
     liveDemo: '',
-    tags: ['Real-Time', 'WebSockets', 'Full Stack'],
+    tags: ['Real-Time', 'Backend'],
     featured: true,
     order: 2
   },
   {
-    title: 'Vendor Management Portal',
-    description: 'Multi-role vendor management admin panel with secure authentication layers, PostgreSQL/MongoDB indexing optimizations, reducing manual dependency by 40% and costs by 30%.',
-    techStack: ['React.js', 'Angular', 'Node.js', 'PostgreSQL', 'MongoDB', 'Material-UI'],
+    title: 'Vendor Management Platform',
+    description: 'Vendor-management platform owned end to end at Tech Mahindra — API design, schema modeling, and multi-role authentication for 150 employees and 70 vendors across 20+ workflows. Indexing and caching cut average query time 30% on MySQL tables of 300K+ rows.',
+    techStack: ['Java', 'Spring Boot', 'MySQL', 'RabbitMQ', 'REST APIs'],
     githubLink: 'https://github.com/chakribontha',
     liveDemo: '',
-    tags: ['Admin Panel', 'Full Stack', 'Backend'],
+    tags: ['Backend', 'Admin Panel'],
     featured: true,
     order: 3
   }
@@ -42,68 +42,69 @@ const projects = [
 const experiences = [
   {
     company: 'Accenture',
-    role: 'Associate Software Engineer',
+    role: 'Software Development Engineer',
     period: 'Jan 2025 – Present',
     location: 'Hyderabad',
     current: true,
     color: '#6EE7B7',
     bullets: [
-      'Built scalable web apps in Agile/Scrum — improved usability across internal teams',
-      'Engineered high-performance REST APIs with Node.js/Express — reduced response time by 28% via query optimization & caching',
-      'Built reusable React.js UI components — boosted dashboard rendering speed by 20%',
-      'Collaborated cross-functionally across design, backend, and QA teams',
+      'Cut p95 API latency from 420ms to 302ms (28%) on Spring Boot services handling 30K+ requests/day — profiled slow endpoints, tuned JPA queries, added composite indexes, and cached hot reads.',
+      'Replaced synchronous cross-service calls with Kafka-based async event processing across 4 topics and 3 consumer services — decoupled dependencies and raised event throughput 35%.',
+      'Containerized 5 services with Docker and deployed to Kubernetes with rolling updates — lifted releases to 6/week and cut deployment failures 20% via a standardized CI/CD pipeline.',
+      'Standardized failure handling across services — centralized exception mapping, retry-with-backoff on downstream calls, structured logging — cutting time spent tracing production issues.',
+      'Added 120+ automated tests (JUnit, Mockito) across order, payment, and data-sync workflows, gated on every merge.',
+      'Mentored an intern to independent delivery through code reviews and hands-on guidance.',
     ],
-    tech: ['React.js','Node.js','Express.js','TypeScript','PostgreSQL','MongoDB','Docker','Git'],
+    tech: ['Java', 'Spring Boot', 'Apache Kafka', 'Kubernetes', 'Docker', 'REST APIs', 'Microservices', 'AWS', 'SQL'],
     order: 1,
   },
   {
     company: 'Tech Mahindra',
-    role: 'Associate Analyst',
+    role: 'Associate Software Developer',
     period: 'May 2024 – Dec 2024',
     location: 'Hyderabad',
     current: false,
     color: '#38BDF8',
     bullets: [
-      'Designed and developed full-stack web modules — improved workflow automation across internal teams',
-      'Engineered vendor-management admin panels with multi-role auth — reduced manual dependency by 40%',
-      'Optimized data-heavy modules with PostgreSQL/MongoDB indexing — cut maintenance costs by 30%',
-      'Integrated backend services, API layers, and scalable UI components',
+      'Owned a vendor-management platform end to end — API design, schema modeling, multi-role authentication, deployment — serving 150 employees and 70 vendors across 20+ workflows.',
+      'Offloaded 5K background jobs/day (report generation, email notifications) to RabbitMQ consumers, moving blocking work off the request path and cutting p95 latency 35%.',
+      'Reduced average query execution time 30% on MySQL tables of 300K+ rows through indexing and caching of repeated reads.',
+      'Automated releases with CI/CD pipelines, moving from 1 to 4 deploys/week and removing manual deployment steps.',
     ],
-    tech: ['React.js','Angular','Node.js','PostgreSQL','Material-UI','Authentication','APIs'],
+    tech: ['Java', 'Spring Boot', 'RabbitMQ', 'MySQL', 'REST APIs', 'Docker', 'Git', 'CI/CD'],
     order: 2,
   },
 ];
 
 const skills = [
   // Languages
-  { name: 'JavaScript', category: 'Languages', proficiency: 95, order: 1 },
-  { name: 'TypeScript', category: 'Languages', proficiency: 88, order: 2 },
-  { name: 'Java', category: 'Languages', proficiency: 85, order: 3 },
-  { name: 'Python', category: 'Languages', proficiency: 80, order: 4 },
+  { name: 'Java', category: 'Languages', proficiency: 92, order: 1 },
+  { name: 'SQL', category: 'Languages', proficiency: 90, order: 2 },
+  { name: 'JavaScript', category: 'Languages', proficiency: 85, order: 3 },
+  { name: 'TypeScript', category: 'Languages', proficiency: 78, order: 4 },
   { name: 'C++', category: 'Languages', proficiency: 75, order: 5 },
-  // Frontend
-  { name: 'React.js', category: 'Frontend', proficiency: 95, order: 1 },
-  { name: 'Angular', category: 'Frontend', proficiency: 80, order: 2 },
-  { name: 'Tailwind CSS', category: 'Frontend', proficiency: 90, order: 3 },
-  { name: 'HTML/CSS', category: 'Frontend', proficiency: 95, order: 4 },
   // Backend
-  { name: 'Node.js', category: 'Backend', proficiency: 92, order: 1 },
-  { name: 'Express.js', category: 'Backend', proficiency: 92, order: 2 },
-  { name: 'REST APIs', category: 'Backend', proficiency: 95, order: 3 },
-  { name: 'Microservices', category: 'Backend', proficiency: 78, order: 4 },
+  { name: 'Spring Boot', category: 'Backend', proficiency: 96, order: 1 },
+  { name: 'REST APIs', category: 'Backend', proficiency: 95, order: 2 },
+  { name: 'Microservices', category: 'Backend', proficiency: 90, order: 3 },
+  { name: 'Spring Security', category: 'Backend', proficiency: 88, order: 4 },
+  { name: 'Hibernate / JPA', category: 'Backend', proficiency: 85, order: 5 },
   // Databases
-  { name: 'MongoDB', category: 'Databases', proficiency: 88, order: 1 },
-  { name: 'PostgreSQL', category: 'Databases', proficiency: 85, order: 2 },
-  { name: 'MySQL', category: 'Databases', proficiency: 82, order: 3 },
+  { name: 'MySQL', category: 'Databases', proficiency: 90, order: 1 },
+  { name: 'PostgreSQL', category: 'Databases', proficiency: 88, order: 2 },
+  { name: 'MongoDB', category: 'Databases', proficiency: 82, order: 3 },
   // DevOps
-  { name: 'Docker', category: 'DevOps', proficiency: 80, order: 1 },
-  { name: 'AWS (EC2, S3, Lambda)', category: 'DevOps', proficiency: 75, order: 2 },
-  { name: 'CI/CD Pipelines', category: 'DevOps', proficiency: 75, order: 3 },
-  { name: 'Git/GitHub', category: 'DevOps', proficiency: 92, order: 4 },
+  { name: 'Docker', category: 'DevOps', proficiency: 88, order: 1 },
+  { name: 'AWS (EC2, S3, CloudFront)', category: 'DevOps', proficiency: 85, order: 2 },
+  { name: 'CI/CD', category: 'DevOps', proficiency: 85, order: 3 },
+  { name: 'Kubernetes', category: 'DevOps', proficiency: 82, order: 4 },
+  { name: 'Git/GitHub', category: 'DevOps', proficiency: 92, order: 5 },
   // Tools
-  { name: 'WebSockets', category: 'Tools', proficiency: 85, order: 1 },
-  { name: 'JWT/OAuth', category: 'Tools', proficiency: 88, order: 2 },
-  { name: 'Agile/Scrum', category: 'Tools', proficiency: 90, order: 3 }
+  { name: 'Apache Kafka', category: 'Tools', proficiency: 90, order: 1 },
+  { name: 'RabbitMQ', category: 'Tools', proficiency: 85, order: 2 },
+  { name: 'JWT/OAuth2', category: 'Tools', proficiency: 88, order: 3 },
+  { name: 'JUnit/Mockito', category: 'Tools', proficiency: 85, order: 4 },
+  { name: 'Agile/Scrum', category: 'Tools', proficiency: 90, order: 5 }
 ];
 
 const seedDB = async () => {

@@ -5,52 +5,212 @@
 @layer base {
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* Light — default */
   :root {
-    --bg: #05070F;
-    --bg2: #080C18;
-    --bg3: #0C1220;
-    --border: rgba(255,255,255,0.07);
-    --border-hover: rgba(110,231,183,0.25);
+    --bg: #F7F8FA;
+    --bg-rgb: 247 248 250;
+    --bg-2: #EDEFF3;
+    --border: rgba(15,23,42,0.09);
+    --border-hover: rgba(4,120,87,0.35);
+    --accent: #047857;
+    --accent-rgb: 4 120 87;
+    --accent-2: #059669;
+    --accent-2-rgb: 5 150 105;
+    --accent-soft: rgba(4,120,87,0.10);
+    --accent-contrast: #FFFFFF;
+    --text: #0B1220;
+    --text-rgb: 11 18 32;
+    --text-2: #4B5565;
+    --text-3: #8A93A3;
+
+    --glass-1: rgba(255,255,255,0.66);
+    --glass-2: rgba(255,255,255,0.30);
+    --glass-specular: rgba(255,255,255,0.55);
+    --glass-spotlight: rgba(255,255,255,0.85);
+    --glass-shadow-1: rgba(15,23,42,0.06);
+    --glass-shadow-2: rgba(15,23,42,0.10);
+    --glass-nav: rgba(247,248,250,0.7);
+
+    --ambient-1: rgba(4,120,87,0.08);
+    --ambient-2: rgba(14,116,144,0.06);
+
+    color-scheme: light;
+  }
+
+  /* Dark — toggled */
+  [data-theme='dark'] {
+    --bg: #06070B;
+    --bg-rgb: 6 7 11;
+    --bg-2: #0A0C13;
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(110,231,183,0.30);
     --accent: #6EE7B7;
-    --accent2: #34D399;
-    --accent-dim: rgba(110,231,183,0.12);
-    --text: #EEF2FF;
-    --text2: #94A3B8;
-    --text3: #475569;
+    --accent-rgb: 110 231 183;
+    --accent-2: #34D399;
+    --accent-2-rgb: 52 211 153;
+    --accent-soft: rgba(110,231,183,0.12);
+    --accent-contrast: #06070B;
+    --text: #F3F5F9;
+    --text-rgb: 243 245 249;
+    --text-2: #97A1B4;
+    --text-3: #565F72;
+
+    --glass-1: rgba(255,255,255,0.065);
+    --glass-2: rgba(255,255,255,0.02);
+    --glass-specular: rgba(255,255,255,0.16);
+    --glass-spotlight: rgba(255,255,255,0.16);
+    --glass-shadow-1: rgba(0,0,0,0.2);
+    --glass-shadow-2: rgba(0,0,0,0.5);
+    --glass-nav: rgba(6,7,11,0.55);
+
+    --ambient-1: rgba(110,231,183,0.10);
+    --ambient-2: rgba(56,189,248,0.07);
+
+    color-scheme: dark;
   }
 
   html { scroll-behavior: smooth; overflow-x: hidden; }
-  body { background: #05070F; color: #EEF2FF; font-family: 'Outfit', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-  ::selection { background: rgba(110,231,183,0.2); color: #6EE7B7; }
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #05070F; }
-  ::-webkit-scrollbar-thumb { background: #6EE7B7; border-radius: 2px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  ::selection { background: var(--accent-soft); color: var(--accent); }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--accent); opacity: 0.4; border-radius: 3px; }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 }
 
 @layer components {
-  .glass { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(12px); }
-  .glass-hover { transition: border-color 0.3s, background 0.3s; }
-  .glass-hover:hover { border-color: rgba(110,231,183,0.25); background: rgba(110,231,183,0.04); }
-  .grid-bg {
-    background-image: linear-gradient(rgba(110,231,183,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(110,231,183,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
+  /*
+   * Liquid Glass surface — three coats:
+   * 1) a translucent fill so the backdrop bleeds through (tuned per theme)
+   * 2) blur + saturate so whatever sits behind actually refracts
+   * 3) a specular highlight (::before) — the "light hitting curved glass" cue
+   */
+  .glass {
+    position: relative;
+    background: linear-gradient(155deg, var(--glass-1), var(--glass-2) 60%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid var(--border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-specular),
+      0 1px 2px var(--glass-shadow-1),
+      0 16px 40px -12px var(--glass-shadow-2);
+    isolation: isolate;
+    transition: background-color 0.4s ease, border-color 0.35s ease, box-shadow 0.4s ease;
   }
-  .noise { position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(120% 90% at 12% -10%, var(--glass-specular), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  /* Cursor spotlight — a light that follows the pointer across every glass surface.
+     --mx/--my are set in px (relative to the element) by a single document-level
+     listener in App.jsx, so no per-component wiring is needed. */
+  .glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), var(--glass-spotlight), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .glass:hover::after {
+    opacity: 1;
+  }
+
+  /* Interactive variant — the micro-interaction layer for cards/buttons/links */
+  .glass-interactive {
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+  }
+  .glass-interactive:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 var(--glass-specular),
+      0 1px 2px var(--glass-shadow-1),
+      0 24px 48px -14px var(--glass-shadow-2),
+      0 0 0 1px var(--accent-soft);
+  }
+
+  /* Resume reveal — real resume text sits behind the hero portrait, invisible
+     until the cursor passes over it, where a small window of it becomes legible.
+     --rx/--ry are set in px (relative to the element) by useGlassSpotlight. */
+  .resume-reveal {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    -webkit-mask-image: radial-gradient(170px circle at var(--rx, -9999px) var(--ry, -9999px), black 0%, black 55%, transparent 100%);
+    mask-image: radial-gradient(170px circle at var(--rx, -9999px) var(--ry, -9999px), black 0%, black 55%, transparent 100%);
+  }
+
+  /* Denser glass for chrome that needs to stay legible over busy content (nav) */
+  .glass-nav {
+    background: var(--glass-nav);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+  }
+
+  .text-balance { text-wrap: balance; }
+}
+
+@layer utilities {
+  /* Ambient backdrop the glass surfaces refract against — static by design, no looping motion */
+  .ambient-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .ambient-bg::before,
+  .ambient-bg::after {
+    content: '';
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(110px);
+    transition: background 0.4s ease;
+  }
+  .ambient-bg::before {
+    top: -12%; right: -8%;
+    width: 620px; height: 620px;
+    background: radial-gradient(circle, var(--ambient-1), transparent 70%);
+  }
+  .ambient-bg::after {
+    bottom: -18%; left: -10%;
+    width: 560px; height: 560px;
+    background: radial-gradient(circle, var(--ambient-2), transparent 70%);
+  }
 }
 
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.marquee-track { animation: marquee 30s linear infinite; display: flex; width: max-content; }
+.marquee-track { animation: marquee 38s linear infinite; display: flex; width: max-content; }
 .marquee-track:hover { animation-play-state: paused; }
-
-@keyframes glowPulse { 0%,100% { box-shadow: 0 0 20px rgba(110,231,183,0.12); } 50% { box-shadow: 0 0 50px rgba(110,231,183,0.3); } }
-.glow-pulse { animation: glowPulse 4s ease-in-out infinite; }
 
 @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 .cursor-blink { animation: blink 1.1s step-end infinite; }
 
-@keyframes floatY { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-16px); } }
+@keyframes floatY { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 .float { animation: floatY 6s ease-in-out infinite; }
 
-@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-.fade-up { animation: fadeSlideUp 0.7s ease forwards; }
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeSlideUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
