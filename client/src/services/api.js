@@ -20,21 +20,6 @@ api.interceptors.response.use(
   }
 )
 
-export const projectsApi = {
-  getAll: () => api.get('/projects'),
-  getFeatured: () => api.get('/projects?featured=true'),
-  getById: (id) => api.get(`/projects/${id}`),
-  create: (data) => api.post('/projects', data),
-}
-
-export const skillsApi = {
-  getAll: () => api.get('/skills'),
-}
-
-export const experienceApi = {
-  getAll: () => api.get('/experience'),
-}
-
 export const contactApi = {
   send: (data) => api.post('/contact', data),
 }

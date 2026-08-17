@@ -1,7 +1,7 @@
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
 import { Github, ExternalLink, ArrowUpRight } from 'lucide-react'
-import { useProjects } from '../../hooks/useData'
+import { projects } from '../../data/projects'
 
 const tagColor = {
   Backend: '#6EE7B7',
@@ -80,7 +80,6 @@ function Card({ project, index, inView }) {
 
 export default function Projects() {
   const [ref, inView] = useInView({ threshold: 0.05, triggerOnce: true })
-  const { projects, loading } = useProjects()
 
   return (
     <section id="projects" ref={ref} className="py-28 relative">
@@ -105,15 +104,9 @@ export default function Projects() {
           </motion.a>
         </div>
 
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[1,2,3].map(i => <div key={i} className="h-72 rounded-3xl glass animate-pulse" />)}
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {projects.map((p, i) => <Card key={p._id} project={p} index={i} inView={inView} />)}
-          </div>
-        )}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {projects.map((p, i) => <Card key={p.id} project={p} index={i} inView={inView} />)}
+        </div>
       </div>
     </section>
   )

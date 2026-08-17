@@ -34,9 +34,6 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api/skills', require('./routes/skillRoutes'));
-app.use('/api/experience', require('./routes/experienceRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Health check

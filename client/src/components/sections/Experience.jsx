@@ -1,11 +1,10 @@
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
 import { MapPin, Calendar, ChevronRight } from 'lucide-react'
-import { useExperience } from '../../hooks/useData'
+import { experiences } from '../../data/experience'
 
 export default function Experience() {
   const [ref, inView] = useInView({ threshold: 0.1, triggerOnce: true })
-  const { experiences, loading } = useExperience()
   const anim = (i) => ({
     initial: { opacity: 0, y: 24 },
     animate: inView ? { opacity: 1, y: 0 } : {},
@@ -24,16 +23,9 @@ export default function Experience() {
           Where I've <span className="text-accent">shipped</span>
         </motion.h2>
 
-        {loading ? (
-          <div className="max-w-4xl space-y-6">
-            {[1, 2].map(i => (
-              <div key={i} className="h-40 rounded-3xl glass animate-pulse" />
-            ))}
-          </div>
-        ) : (
         <div className="max-w-4xl space-y-6">
           {experiences.map((e, idx) => (
-            <motion.div key={e._id || e.company} {...anim(2 + idx)}
+            <motion.div key={e.company} {...anim(2 + idx)}
               className="glass glass-interactive rounded-3xl p-7">
 
               {/* Header */}
@@ -82,7 +74,6 @@ export default function Experience() {
             </motion.div>
           ))}
         </div>
-        )}
       </div>
     </section>
   )
